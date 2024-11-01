@@ -1,41 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nuclear Power Plant Simulator</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Nuclear Power Plant Simulator</title>
 </head>
 <body>
-  <!-- Alarm Display (Fixed at Top) -->
-  <div class="alarm-display" id="alarm-display">Alarm Status:</div>
-  
-  <!-- Tab Navigation -->
-  <div class="tab-container">
-    <button id="bop-tab" class="tab-button active">BOP Panel</button>
-    <button id="npp-tab" class="tab-button">NPP Panel</button>
-  </div>
-  
-  <!-- Control Panels -->
-  <div class="panel-container">
-    <div id="bop-panel" class="panel">
-      <h2>BOP Panel</h2>
-      <button class="switch" onclick="activateSwitch('BOP Switch 1')">BOP Switch 1</button>
-      <button class="switch" onclick="activateSwitch('BOP Switch 2')">BOP Switch 2</button>
-      <button class="switch" onclick="activateSwitch('BOP Switch 3')">BOP Switch 3</button>
+    <div class="tabs">
+        <button class="tab-button" onclick="openTab('bopPanel')">BOP Panel</button>
+        <button class="tab-button" onclick="openTab('pl1Panel')">PL1</button>
     </div>
-    
-    <div id="npp-panel" class="panel hidden">
-      <h2>NPP Panel</h2>
-      <button class="switch" onclick="activateSwitch('NPP Switch 1')">NPP Switch 1</button>
-      <button class="switch" onclick="activateSwitch('NPP Switch 2')">NPP Switch 2</button>
-      <button class="switch" onclick="activateSwitch('NPP Switch 3')">NPP Switch 3</button>
-    </div>
-  </div>
-  
-  <!-- Response Display (Fixed at Bottom) -->
-  <div class="response-display" id="response-display">Response Actions:</div>
 
-  <script src="script.js"></script>
+    <div id="alarmDisplay" class="alarm-display">
+        <h3>Alarm Display</h3>
+        <div id="alarms"></div>
+    </div>
+
+    <div id="responseDisplay" class="response-display">
+        <h3>Alarm Responses</h3>
+        <div id="responses"></div>
+    </div>
+
+    <div class="panel" id="bopPanel" style="display: none;">
+        <h2>BOP Panel</h2>
+        <!-- Existing BOP panel contents -->
+    </div>
+
+    <div class="panel" id="pl1Panel">
+        <h2>PL1 Panel</h2>
+        <button id="startScenarioBtn">Start Scenario</button>
+        <div>
+            <h4>Handswith Controls</h4>
+            <button onclick="activateECCS()">Activate ECCS</button>
+            <button onclick="startCoolantPumps()">Start Coolant Pumps</button>
+            <button onclick="openPressureReliefValve()">Open Pressure Relief Valve</button>
+            <button onclick="engageContainmentCooling()">Engage Containment Cooling</button>
+            <button onclick="initiateEmergencyAlarms()">Initiate Emergency Alarms</button>
+            <button onclick="manualShutoffReactor()">Manual Shut-off Reactor</button>
+            <button onclick="requestFeedback()">Request Feedback</button>
+        </div>
+        <div class="alarm-lamps">
+            <span class="lamp" id="lamp1"></span>
+            <span class="lamp" id="lamp2"></span>
+            <span class="lamp" id="lamp3"></span>
+            <span class="lamp" id="lamp4"></span>
+            <span class="lamp" id="lamp5"></span>
+            <span class="lamp" id="lamp6"></span>
+            <span class="lamp" id="lamp7"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

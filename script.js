@@ -1,76 +1,83 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const bopTab = document.getElementById('bop-tab');
-  const nppTab = document.getElementById('npp-tab');
-  const bopPanel = document.getElementById('bop-panel');
-  const nppPanel = document.getElementById('npp-panel');
+let scenarioActive = false;
 
-  const switchPanel = (panelToShow, panelToHide, activeTab, inactiveTab) => {
-    activeTab.classList.add('active');
-    inactiveTab.classList.remove('active');
-    panelToShow.classList.remove('hidden');
-    panelToHide.classList.add('hidden');
-  };
+// Function to start the scenario
+function startScenario() {
+    scenarioActive = true;
+    addAlarm("LOCA detected! Immediate action required!", "A1");
+    document.getElementById("startScenarioBtn").disabled = true; // Disable button once scenario starts
+}
 
-  bopTab.addEventListener('click', () => {
-    switchPanel(bopPanel, nppPanel, bopTab, nppTab);
-  });
+// Function to add alarms
+function addAlarm(message, code) {
+    const alarmsDiv = document.getElementById("alarms");
+    const newAlarm = document.createElement("div");
+    const timestamp = new Date().toLocaleTimeString();
+    newAlarm.innerHTML = `[${timestamp}] ${message} (Code: ${code})`;
+    newAlarm.className = "alarm red"; // New alarms in red
+    alarmsDiv.appendChild(newAlarm);
+    document.getElementById(`lamp${code.charAt(1)}`).classList.add("red"); // Light lamp for alarm
+}
 
-  nppTab.addEventListener('click', () => {
-    switchPanel(nppPanel, bopPanel, nppTab, bopTab);
-  });
-});
+// Functions for handswitch actions
+function activateECCS() {
+    addResponse("Action for A1: Activate ECCS to prevent overheating.");
+    clearLamp(1);
+}
 
-const activateSwitch = (switchName) => {
-  const alarmDisplay = document.getElementById('alarm-display');
-  const responseDisplay = document.getElementById('response-display');
-  
-  // Define alarm messages, codes, and responses based on switch
-  let alarmMessage = "";
-  let responseMessage = "";
-  let alarmCode = "";
+function startCoolantPumps() {
+    addResponse("Action for A2: Start coolant pumps to restore cooling.");
+    clearLamp(2);
+}
 
-  switch (switchName) {
-    case 'BOP Switch 1':
-      alarmCode = "A1";
-      alarmMessage = `${alarmCode}: Temperature Rising`;
-      responseMessage = `Action for ${alarmCode}: Reduce power to stabilize temperature.`;
-      break;
-    case 'BOP Switch 2':
-      alarmCode = "A2";
-      alarmMessage = `${alarmCode}: Pressure Decrease`;
-      responseMessage = `Action for ${alarmCode}: Increase pressure to optimal level.`;
-      break;
-    case 'BOP Switch 3':
-      alarmCode = "A3";
-      alarmMessage = `${alarmCode}: Water Level Low`;
-      responseMessage = `Action for ${alarmCode}: Request field feedback and increase water supply.`;
-      break;
-    case 'NPP Switch 1':
-      alarmCode = "A4";
-      alarmMessage = `${alarmCode}: Reactor Power Surge`;
-      responseMessage = `Action for ${alarmCode}: Shut-off reactor to prevent overload.`;
-      break;
-    case 'NPP Switch 2':
-      alarmCode = "A5";
-      alarmMessage = `${alarmCode}: Coolant Flow Reduced`;
-      responseMessage = `Action for ${alarmCode}: Improve coolant flow to maintain safe levels.`;
-      break;
-    case 'NPP Switch 3':
-      alarmCode = "A6";
-      alarmMessage = `${alarmCode}: Radiation Leak Detected`;
-      responseMessage = `Action for ${alarmCode}: Initiate evacuation and seal affected area.`;
-      break;
-    default:
-      alarmCode = "Unknown";
-      alarmMessage = `${alarmCode} alarm`;
-      responseMessage = `No response available for ${alarmCode}.`;
-  }
+function openPressureReliefValve() {
+    addResponse("Action for A3: Open pressure relief valve to prevent rupture.");
+    clearLamp(3);
+}
 
-  // Append new alarm and response to each display
-  alarmDisplay.innerHTML += `<div>${alarmMessage}</div>`;
-  responseDisplay.innerHTML += `<div>${responseMessage}</div>`;
+function engageContainmentCooling() {
+    addResponse("Action for A4: Engage containment cooling to ensure safety.");
+    clearLamp(4);
+}
 
-  // Auto-scroll to the latest message
-  alarmDisplay.scrollTop = alarmDisplay.scrollHeight;
-  responseDisplay.scrollTop = responseDisplay.scrollHeight;
-};
+function initiateEmergencyAlarms() {
+    addResponse("Action for A5: Emergency alarms activated.");
+    clearLamp(5);
+}
+
+function manualShutoffReactor() {
+    addResponse("Action for A6: Manual reactor shut-off initiated.");
+    clearLamp(6);
+}
+
+function requestFeedback() {
+    addResponse("Action for A7: Request feedback on system status.");
+    clearLamp(7);
+}
+
+// Function to add response
+function addResponse(message) {
+    const responsesDiv = document.getElementById("responses");
+    const newResponse = document.createElement("div");
+    const timestamp = new Date().toLocaleTimeString();
+    newResponse.innerHTML = `[${timestamp}] ${message}`;
+    newResponse.className = "response green"; // Responses in green
+    responsesDiv.appendChild(newResponse);
+}
+
+// Function to clear lamps after operator response
+function clearLamp(index) {
+    document.getElementById(`lamp${index}`).classList.remove("red");
+    document.getElementById(`lamp${index}`).classList.add("green");
+}
+
+// Function to open the selected tab
+function openTab(tabName) {
+    const tabs = document.querySelectorAll('.panel');
+    tabs.forEach(tab => {
+        tab.style.display = 'none'; // Hide all tabs
+    });
+    document.getElementById(tabName).style.display = 'block'; // Show selected tab
+}
+
+// Event listener for the start scenario button
+document.getElementById("startScenarioBtn").addEventListener("click", startScenario);
