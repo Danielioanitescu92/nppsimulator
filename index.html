@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuclear Power Plant Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Alarm Display (Fixed at Top) -->
+  <div class="alarm-display" id="alarm-display">Alarm Status:</div>
+  
+  <!-- Tab Navigation -->
+  <div class="tab-container">
+    <button id="bop-tab" class="tab-button active">BOP Panel</button>
+    <button id="npp-tab" class="tab-button">NPP Panel</button>
+  </div>
+  
+  <!-- Control Panels -->
+  <div class="panel-container">
+    <div id="bop-panel" class="panel">
+      <h2>BOP Panel</h2>
+      <button class="switch" onclick="activateSwitch('BOP Switch 1')">BOP Switch 1</button>
+      <button class="switch" onclick="activateSwitch('BOP Switch 2')">BOP Switch 2</button>
+      <button class="switch" onclick="activateSwitch('BOP Switch 3')">BOP Switch 3</button>
+    </div>
+    
+    <div id="npp-panel" class="panel hidden">
+      <h2>NPP Panel</h2>
+      <button class="switch" onclick="activateSwitch('NPP Switch 1')">NPP Switch 1</button>
+      <button class="switch" onclick="activateSwitch('NPP Switch 2')">NPP Switch 2</button>
+      <button class="switch" onclick="activateSwitch('NPP Switch 3')">NPP Switch 3</button>
+    </div>
+  </div>
+  
+  <!-- Response Display (Fixed at Bottom) -->
+  <div class="response-display" id="response-display">Response Actions:</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
