@@ -21,37 +21,37 @@ function addAlarm(message, code) {
 // Functions for handswitch actions
 function activateECCS() {
     addResponse("Action for A1: Activate ECCS to prevent overheating.");
-    clearLamp(1);
+    clearAlarm(1); // Clear alarm and lamp
 }
 
 function startCoolantPumps() {
     addResponse("Action for A2: Start coolant pumps to restore cooling.");
-    clearLamp(2);
+    clearAlarm(2); // Clear alarm and lamp
 }
 
 function openPressureReliefValve() {
     addResponse("Action for A3: Open pressure relief valve to prevent rupture.");
-    clearLamp(3);
+    clearAlarm(3); // Clear alarm and lamp
 }
 
 function engageContainmentCooling() {
     addResponse("Action for A4: Engage containment cooling to ensure safety.");
-    clearLamp(4);
+    clearAlarm(4); // Clear alarm and lamp
 }
 
 function initiateEmergencyAlarms() {
     addResponse("Action for A5: Emergency alarms activated.");
-    clearLamp(5);
+    clearAlarm(5); // Clear alarm and lamp
 }
 
 function manualShutoffReactor() {
     addResponse("Action for A6: Manual reactor shut-off initiated.");
-    clearLamp(6);
+    clearAlarm(6); // Clear alarm and lamp
 }
 
 function requestFeedback() {
     addResponse("Action for A7: Request feedback on system status.");
-    clearLamp(7);
+    clearAlarm(7); // Clear alarm and lamp
 }
 
 // Function to add response
@@ -60,14 +60,25 @@ function addResponse(message) {
     const newResponse = document.createElement("div");
     const timestamp = new Date().toLocaleTimeString();
     newResponse.innerHTML = `[${timestamp}] ${message}`;
-    newResponse.className = "response green"; // Responses in green
+    newResponse.className = "response"; // Standard color for responses
     responsesDiv.appendChild(newResponse);
 }
 
-// Function to clear lamps after operator response
-function clearLamp(index) {
+// Function to clear alarms and lamps after operator response
+function clearAlarm(index) {
+    const alarmsDiv = document.getElementById("alarms");
+    const alarmItems = alarmsDiv.getElementsByClassName("alarm");
+    
+    for (let alarm of alarmItems) {
+        if (alarm.innerHTML.includes(`Code: A${index}`)) {
+            // Change the alarm color to green
+            alarm.className = "alarm green"; // Mark alarm as resolved
+            break;
+        }
+    }
+    
+    // Clear the corresponding lamp
     document.getElementById(`lamp${index}`).classList.remove("red");
-    document.getElementById(`lamp${index}`).classList.add("green");
 }
 
 // Function to open the selected tab
