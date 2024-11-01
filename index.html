@@ -7,10 +7,6 @@
     <title>Nuclear Power Plant Simulator</title>
 </head>
 <body>
-    <div class="tabs">
-        <button class="tab-button" onclick="openTab('bopPanel')">BOP Panel</button>
-        <button class="tab-button" onclick="openTab('pl1Panel')">PL1</button>
-    </div>
 
     <div id="alarmDisplay" class="alarm-display">
         <h3>Alarm Display</h3>
@@ -20,6 +16,11 @@
     <div id="responseDisplay" class="response-display">
         <h3>Alarm Responses</h3>
         <div id="responses"></div>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab-button" onclick="openTab('bopPanel')">BOP Panel</button>
+        <button class="tab-button" onclick="openTab('pl1Panel')">PL1</button>
     </div>
 
     <div class="panel" id="bopPanel" style="display: none;">

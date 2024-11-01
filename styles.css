@@ -33,6 +33,14 @@ body {
   bottom: 0;
 }
 
+.display-area {
+  height: 150px; /* Set this height to fit your design */
+  overflow-y: auto; /* Allow vertical scrolling */
+  border: 1px solid #ccc; /* Optional: Add a border for visibility */
+  padding: 5px; /* Optional: Add some padding */
+  margin: 10px 0; /* Optional: Margin for spacing */
+}
+
 .tab-container {
   margin-top: 60px;
   display: flex;
@@ -142,3 +150,13 @@ body {
 .alarm-lamps {
   margin-top: 10px;
 }
+
+
+
+
+
+
+
+
+
+
